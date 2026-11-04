@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080b14">
+  <meta name="description" content="Bittaqwa — pratinjau aplikasi dalam bingkai iPhone 16.">
+  <link rel="icon" type="image/png" href="/app/favicon.png">
+  <title>Bittaqwa — iPhone 16 Preview</title>
+  <style>
+    :root { color-scheme: dark; --device-width: 410px; }
+    * { box-sizing: border-box; }
+    html, body { width: 100%; min-height: 100%; margin: 0; }
+    body {
+      min-height: 100svh;
+      overflow: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px 16px;
+      color: #eef2ff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(ellipse at 50% 42%, rgba(36, 62, 111, .34), transparent 43%),
+        radial-gradient(ellipse at 15% 85%, rgba(15, 92, 79, .17), transparent 38%),
+        linear-gradient(145deg, #111827 0%, #080b14 52%, #101522 100%);
+    }
+    .layout {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      width: 100%;
+    }
+    .brand {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+      text-align: center;
+    }
+    .eyebrow {
+      color: #a7b5ce;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+    }
+    .brand-name {
+      font-size: 21px;
+      line-height: 1.1;
+      font-weight: 750;
+      letter-spacing: -.045em;
+    }
+    .brand-note { color: #8390a8; font-size: 11px; }
+    .device {
+      position: relative;
+      width: min(var(--device-width), calc(100vw - 38px), calc((100svh - 140px) * .4703));
+      aspect-ratio: 410 / 872;
+      flex: 0 0 auto;
+      padding: 7px;
+      border-radius: 58px;
+      background: linear-gradient(140deg, #69717c 0%, #171b23 13%, #090b0f 48%, #505762 83%, #171a20 100%);
+      box-shadow:
+        0 38px 90px rgba(0,0,0,.58),
+        0 12px 30px rgba(0,0,0,.44),
+        inset 0 0 0 1px rgba(255,255,255,.52),
+        inset 0 0 0 3px rgba(255,255,255,.07);
+    }
+    .device::before {
+      content: "";
+      position: absolute;
+      z-index: 4;
+      top: 142px;
+      left: -3px;
+      width: 3px;
+      height: 74px;
+      border-radius: 3px 0 0 3px;
+      background: linear-gradient(#737b86, #252a32 45%, #656d77);
+      box-shadow: 0 -52px 0 -0.1px #4b535e;
+    }
+    .device::after {
+      content: "";
+      position: absolute;
+      z-index: 4;
+      top: 180px;
+      right: -3px;
+      width: 3px;
+      height: 104px;
+      border-radius: 0 3px 3px 0;
+      background: linear-gradient(#69717b, #262b33 50%, #626a75);
+    }
+    .screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      isolation: isolate;
+      border-radius: 51px;
+      background: #fff;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.48);
+    }
+    .app {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #fff;
+    }
+    .dynamic-island {
+      position: absolute;
+      z-index: 3;
+      top: 13px;
+      left: 50%;
+      width: 104px;
+      height: 29px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: #030405;
+      box-shadow: 0 1px 2px rgba(0,0,0,.55), inset 0 0 0 1px rgba(255,255,255,.035);
+      pointer-events: none;
+    }
+    .camera-glint {
+      position: absolute;
+      top: 9px;
+      right: 13px;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 35%, #314e74, #07101c 70%);
+      box-shadow: 0 0 0 1px #10141b;
+    }
+    .home-indicator {
+      position: absolute;
+      z-index: 3;
+      bottom: 8px;
+      left: 50%;
+      width: 108px;
+      height: 4px;
+      transform: translateX(-50%);
+      border-radius: 999px;
+      background: rgba(0,0,0,.76);
+      pointer-events: none;
+    }
+    .footnote { color: #78859b; font-size: 10px; text-align: center; }
+    @media (max-width: 520px) {
+      body { padding: 10px 8px; }
+      .layout { gap: 9px; }
+      .brand { gap: 3px; }
+      .eyebrow { font-size: 8px; }
+      .brand-name { font-size: 17px; }
+      .brand-note, .footnote { font-size: 9px; }
+      .device {
+        width: min(calc(100vw - 22px), calc((100svh - 76px) * .4703));
+        border-radius: 49px;
+      }
+      .screen { border-radius: 43px; }
+    }
+    @media (max-height: 650px) and (min-width: 521px) {
+      body { padding-block: 8px; }
+      .layout { gap: 7px; }
+      .brand-note, .footnote { display: none; }
+      .device { width: min(365px, calc((100svh - 58px) * .4703)); }
+    }
+  </style>
+</head>
+<body>
+  <main class="layout">
+    <header class="brand" aria-label="Bittaqwa live preview">
+      <div class="eyebrow">Islamic app experience</div>
+      <div class="brand-name">Bittaqwa</div>
+      <div class="brand-note">Live preview · iPhone 16</div>
+    </header>
+    <section class="device" aria-label="Bittaqwa displayed in an iPhone 16 frame">
+      <div class="screen">
+        <iframe
+          class="app"
+          src="/app/index.html"
+          title="Aplikasi Bittaqwa"
+          allow="autoplay; encrypted-media; picture-in-picture; web-share; fullscreen"
+          allowfullscreen
+        ></iframe>
+        <div class="dynamic-island" aria-hidden="true"><span class="camera-glint"></span></div>
+        <div class="home-indicator" aria-hidden="true"></div>
+      </div>
+    </section>
+    <footer class="footnote">Bittaqwa · Built with Flutter</footer>
+  </main>
+</body>
+</html>
