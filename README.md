@@ -1,67 +1,263 @@
-Bittaqwa
-Aplikasi Islami berbasis Flutter yang membantu pengguna mengakses doa harian, jadwal sholat, video kajian, dan kalkulator zakat dalam satu aplikasi.
-Live Demo: Tambahkan URL Netlify Bittaqwa di sini setelah deployment selesai.
+# Bittaqwa
 
-Fitur
-- Dashboard — halaman utama dengan sapaan dan ilustrasi header yang menyesuaikan waktu.
-- Doa-doa harian — kumpulan doa berdasarkan kategori, seperti pagi dan malam, rumah, makanan dan minuman, perjalanan, sholat, serta etika baik. Detail doa menampilkan teks Arab, terjemahan, dan referensi yang tersedia.
-- Jadwal sholat — mengambil jadwal melalui API eQuran. Project saat ini menggunakan konfigurasi awal Jonggol, Kabupaten Bogor, dan menyediakan data fallback ketika permintaan API gagal atau perangkat offline.
-- Video kajian — daftar video kajian YouTube beserta thumbnail, judul, ustadz, channel, dan deskripsi.
-- Kalkulator zakat — membantu menghitung estimasi zakat harta berdasarkan persentase 2,5% dan ambang harta yang dikonfigurasi di dalam kode.
-Teknologi
-- Flutter dan Dart
-- Material Design 3
-- http untuk komunikasi dengan API jadwal sholat
-- intl untuk format tanggal dan mata uang
-- Package pemutar YouTube yang tercantum di pubspec.yaml
-- Font Poppins dan aset gambar lokal
-Menjalankan Project
-Prasyarat
-Pastikan Flutter SDK dan Dart SDK sudah terpasang. Versi Dart yang dibutuhkan mengikuti batasan environment di pubspec.yaml.
+**Bittaqwa** adalah aplikasi Islami yang dikembangkan menggunakan **Flutter**. Project ini menyediakan beberapa fitur untuk membantu pengguna mengakses doa harian, melihat jadwal sholat, menonton video kajian, dan menghitung zakat.
+
+> **Penting — ada dua bentuk Bittaqwa yang berbeda:**
+> - **Flutter App (source project):** project aplikasi yang berisi kode Dart dan konfigurasi platform seperti Android dan iOS. Inilah project utama untuk pengembangan dan pembuatan aplikasi.
+> - **Web Preview:** versi Flutter Web yang dijalankan melalui browser. Preview Netlify dapat dibungkus dengan frame iPhone 16 untuk keperluan demo. Frame tersebut hanya mockup tampilan website, **bukan** aplikasi iOS native atau simulator iPhone.
+
+---
+
+## Demo
+
+- **Web Preview:** [Buka Bittaqwa Web Preview](https://YOUR-NETLIFY-SITE.netlify.app)
+- **GitHub Repository:** [Bittaqwa](https://github.com/YOUR-USERNAME/YOUR-REPOSITORY)
+
+> Ganti URL contoh di atas dengan link Netlify dan repository GitHub milikmu.
+
+---
+
+## Fitur
+
+- **Dashboard:** halaman utama sebagai navigasi ke fitur-fitur Bittaqwa.
+- **Doa-doa:** daftar kategori doa dan halaman detail doa.
+- **Jadwal sholat:** menampilkan jadwal sholat menggunakan layanan data/API eksternal.
+- **Video kajian:** halaman daftar video kajian YouTube dan halaman pemutar video.
+- **Kalkulator zakat:** membantu menghitung estimasi zakat berdasarkan input jumlah harta.
+
+Ketersediaan jadwal sholat dan pemutaran video membutuhkan koneksi internet. Video tertentu juga dapat tidak bisa diputar melalui embed apabila pemilik video atau YouTube membatasi pemutaran di situs lain.
+
+---
+
+## Flutter App vs Web Preview
+
+| | Flutter App (aplikasi utama) | Web Preview (website/demo) |
+|---|---|---|
+| Bentuk | Project Flutter dengan source code Dart | Hasil build Flutter Web yang disajikan melalui browser |
+| Cara dibuka | Dijalankan/build melalui Flutter pada platform yang didukung | Dibuka menggunakan link Netlify atau browser |
+| Folder utama | `lib/`, `android/`, `ios/`, `pubspec.yaml`, dan folder platform lainnya | `build/web/` |
+| Tujuan | Pengembangan dan pembuatan aplikasi untuk perangkat | Demo agar orang dapat mencoba Bittaqwa tanpa memasang project Flutter |
+| Frame iPhone 16 | Tidak diperlukan untuk aplikasi native | Opsional; hanya mockup HTML/CSS yang membingkai Web Preview |
+
+### 1. Flutter App — project aplikasi yang sebenarnya
+
+Folder project Flutter berisi source code utama Bittaqwa. Kode antarmuka dan fitur ditulis dengan Dart di dalam folder `lib/`. Project juga menyertakan folder platform seperti `android/`, `ios/`, `web/`, `macos/`, `windows/`, dan `linux/`.
+
+Folder platform tersebut adalah konfigurasi/build target Flutter. Keberhasilan menjalankan atau merilis aplikasi di tiap platform tetap bergantung pada SDK, toolchain, konfigurasi, dan pengujian platform terkait.
+
+Contoh menjalankan aplikasi pada emulator atau perangkat yang terdeteksi Flutter:
+
+```bash
+flutter doctor
+flutter pub get
+flutter devices
+flutter run -d <device-id>
+```
+
+Contoh membuat build Android:
+
+```bash
+flutter build apk --release
+```
+
+Contoh membuat build iOS (memerlukan macOS dan Xcode):
+
+```bash
+flutter build ios --release
+```
+
+Perintah build tidak otomatis memublikasikan aplikasi ke Google Play atau App Store. Proses signing, konfigurasi store, dan persyaratan publikasi tetap diperlukan.
+
+### 2. Web Preview — versi yang bisa dilihat melalui website
+
+Web Preview adalah hasil kompilasi Flutter untuk browser. Pengunjung dapat membuka link website menggunakan Chrome, Safari, atau browser modern lainnya tanpa menjalankan Flutter di komputer mereka.
+
+Untuk membuat hasil build Web dari source project:
+
+```bash
+flutter pub get
+flutter build web --release
+```
+
+Hasil build akan dibuat di:
+
+```text
+build/web/
+```
+
+**Untuk deploy Web Preview tanpa frame iPhone**, upload folder `build/web/` ke layanan hosting static seperti Netlify.
+
+### 3. Web Preview dengan frame iPhone 16
+
+Versi demo dengan frame iPhone 16 menggunakan halaman HTML/CSS sebagai pembungkus tampilan. Halaman tersebut menampilkan hasil Flutter Web di dalam area layar menggunakan `iframe`.
+
+Dengan demikian:
+
+- Aplikasi yang berjalan di dalam frame tetap merupakan **Flutter Web**.
+- Frame iPhone 16 hanya elemen presentasi/mockup di website.
+- Frame tersebut bukan emulator iOS, bukan perangkat iPhone sungguhan, dan bukan file aplikasi `.ipa`.
+- Untuk menjalankan aplikasi native di iPhone, gunakan project Flutter dan jalankan/build melalui Xcode pada perangkat atau simulator iOS.
+
+Jika menggunakan paket Netlify iPhone 16 yang berisi `index.html` dan folder `app/`, upload **folder terluar** yang memuat keduanya. Jangan hanya meng-upload folder `app/`.
+
+Struktur paket preview iPhone 16:
+
+```text
+Bittaqwa_iPhone16_Netlify/
+├── index.html   # Halaman mockup/frame iPhone 16
+└── app/         # Hasil build Flutter Web
+    ├── index.html
+    ├── flutter_bootstrap.js
+    ├── main.dart.js
+    └── assets/
+```
+
+---
+
+## Teknologi
+
+- **Flutter & Dart** — framework dan bahasa pemrograman aplikasi.
+- **Material Design** — komponen antarmuka Flutter.
+- **HTTP** — komunikasi dengan layanan data/API jadwal sholat.
+- **Intl** — pemformatan angka dan mata uang.
+- **YouTube Player package** — integrasi pemutar video kajian YouTube sesuai dependency yang digunakan project.
+- **Netlify** — hosting untuk Web Preview.
+
+Versi dependency yang tepat dapat dilihat pada `pubspec.yaml` dan `pubspec.lock` di repository.
+
+---
+
+## Struktur Project
+
+```text
+bittaqwa_Ghaisan/
+├── android/                     # Konfigurasi Android
+├── ios/                         # Konfigurasi iOS
+├── web/                         # Konfigurasi Flutter Web
+├── macos/                       # Konfigurasi macOS
+├── windows/                     # Konfigurasi Windows
+├── linux/                       # Konfigurasi Linux
+├── assets/
+│   ├── fonts/                   # Font Poppins
+│   └── image/                   # Gambar dan aset aplikasi
+├── lib/
+│   ├── main.dart                # Entry point aplikasi
+│   ├── data/                    # Data doa
+│   ├── models/                  # Model data
+│   ├── presentation/
+│   │   ├── screen/              # Dashboard dan layar zakat/doa
+│   │   └── widget/              # Widget yang digunakan kembali
+│   ├── screens/                 # Layar doa, jadwal sholat, kajian, dan detail
+│   └── services/                # Service untuk mengambil data/API
+├── test/                        # Unit/widget test (jika tersedia)
+├── pubspec.yaml                 # Konfigurasi project dan dependencies
+└── README.md
+```
+
+---
+
+## Menjalankan Project di Lokal
+
+### Persyaratan
+
+- Flutter SDK yang sesuai dengan batas versi pada `pubspec.yaml`.
+- Dart SDK yang disertakan dengan Flutter.
+- Visual Studio Code atau Android Studio (opsional, sebagai editor).
+- Android SDK untuk menjalankan/build Android.
+- Xcode untuk menjalankan/build iOS di macOS.
 
 Periksa instalasi Flutter:
+
+```bash
+flutter --version
 flutter doctor
-Instalasi dependency
-Clone repository, lalu masuk ke folder project yang berisi pubspec.yaml:
-git clone https://github.com/USERNAME/Bittaqwa.git
-cd Bittaqwa
+```
+
+### Instalasi
+
+Clone repository:
+
+```bash
+git clone https://github.com/YOUR-USERNAME/YOUR-REPOSITORY.git
+cd YOUR-REPOSITORY
+```
+
+Ambil dependencies:
+
+```bash
 flutter pub get
-Ganti USERNAME dengan username GitHub pemilik repository.
-Jalankan di Chrome
+```
+
+Jalankan di Chrome:
+
+```bash
 flutter run -d chrome
-Build Flutter Web
-flutter build web --release
-Hasil build akan tersedia di folder:
-build/web/
-Untuk deployment Flutter Web standar, gunakan hasil build tersebut sebagai folder publikasi Netlify. Pastikan file index.html berada di root folder yang dipublikasikan.
-Struktur Folder
-Bittaqwa/
-├── assets/
-│   ├── fonts/              # Font Poppins
-│   └── image/              # Ilustrasi, ikon, dan thumbnail
-├── lib/
-│   ├── data/               # Data pendukung
-│   ├── models/             # Model doa, jadwal sholat, dan video kajian
-│   ├── presentation/
-│   │   ├── screen/         # Dashboard dan halaman zakat
-│   │   └── widget/         # Widget yang digunakan kembali
-│   ├── screens/            # Halaman doa, jadwal sholat, dan kajian
-│   ├── services/           # Integrasi layanan/API
-│   └── main.dart           # Entry point aplikasi dan routing
-├── test/                   # Unit/widget tests
-├── web/                    # Konfigurasi Flutter Web
-├── pubspec.yaml            # Dependency dan konfigurasi aset
-└── README.md
-Konfigurasi yang Perlu Diperhatikan
-- Lokasi jadwal sholat: konfigurasi awal berada di lib/services/jadwal_sholat_service.dart (JAWA BARAT, KAB. BOGOR, dan label Jonggol, Kab Bogor). Sesuaikan dengan wilayah target sebelum aplikasi digunakan secara lebih luas.
-- Ambang kalkulator zakat: nilai ambang harta saat ini ditetapkan di lib/presentation/screen/zakat_screan.dart. Periksa dan sesuaikan nilai tersebut berdasarkan ketentuan nisab serta harga emas terkini sebelum dipakai sebagai acuan pembayaran.
-- Konten video kajian: daftar judul, channel, URL, dan deskripsi dikelola di lib/models/video_kajian_model.dart. Pemutaran tetap bergantung pada ketersediaan video dan kebijakan embed dari YouTube.
-Deployment dengan Frame iPhone 16
-Jika menggunakan paket preview iPhone 16 yang terpisah, deploy folder terluar yang berisi index.html dan folder app/ ke Netlify. Jangan upload folder app/ saja. Paket tersebut adalah halaman showcase/mockup untuk menampilkan hasil build Flutter di dalam frame iPhone; bukan aplikasi iOS native.
-Catatan
-- Jadwal sholat dapat menampilkan data fallback ketika API tidak dapat diakses.
-- Video YouTube tertentu mungkin tidak dapat diputar melalui embedded player karena pembatasan dari pemilik video atau YouTube.
-- Kalkulator zakat merupakan fitur estimasi. Untuk keputusan ibadah dan perhitungan zakat yang tepat, verifikasi nisab serta ketentuan yang berlaku dengan sumber atau pihak yang tepercaya.
-Kontribusi
-Ide, laporan bug, dan penyempurnaan fitur sangat terbuka. Saat mengirim perubahan, sertakan penjelasan singkat mengenai tujuan perubahan dan cara mengujinya.
-Dibuat dengan Flutter. Semoga Bittaqwa bermanfaat dan menjadi sarana untuk terus belajar serta memperbaiki ibadah.
+```
+
+Jalankan di emulator/perangkat yang terdeteksi:
+
+```bash
+flutter devices
+flutter run -d <device-id>
+```
+
+---
+
+## Deployment ke Netlify
+
+### A. Deploy Web Preview biasa
+
+1. Build Flutter Web:
+
+   ```bash
+   flutter build web --release
+   ```
+
+2. Buka folder `build/web/`.
+3. Upload folder `build/web/` ke Netlify Drop atau atur folder tersebut sebagai **publish directory** pada konfigurasi Netlify.
+4. Buka URL deployment untuk mencoba Bittaqwa melalui browser.
+
+### B. Deploy Web Preview dengan frame iPhone 16
+
+1. Gunakan paket preview iPhone 16 yang berisi `index.html` dan folder `app/`.
+2. Extract ZIP paket tersebut.
+3. Pastikan `index.html` dan folder `app/` berada di dalam folder yang sama.
+4. Upload folder terluar tersebut ke Netlify.
+5. Buka URL deployment. Halaman utama akan menampilkan Flutter Web di dalam mockup iPhone 16.
+
+> Bila source code Flutter diperbarui, build ulang Web dan perbarui isi folder `app/` pada paket preview. Pertahankan `index.html` pembungkus iPhone 16.
+
+---
+
+## Catatan
+
+- Web Preview adalah cara untuk mencoba versi browser dari Bittaqwa; tampilannya dapat berbeda dari aplikasi native pada perangkat.
+- Frame iPhone 16 hanya mockup presentasi, bukan bukti bahwa aplikasi telah dijalankan pada iPhone asli.
+- Fitur yang membutuhkan internet tidak akan bekerja dengan benar saat perangkat offline.
+- Pastikan API key, token, password, dan secret lainnya tidak dimasukkan ke repository publik. Gunakan environment variable atau konfigurasi secret pada layanan hosting bila diperlukan.
+- Periksa kembali ketentuan penggunaan dan pembatasan embed untuk setiap video YouTube.
+- Perhitungan zakat dalam aplikasi merupakan alat bantu estimasi. Verifikasi nisab dan ketentuan zakat dengan sumber resmi atau pihak yang kompeten.
+
+---
+
+## Kontribusi
+
+Saran, laporan bug, dan pengembangan fitur dapat disampaikan melalui GitHub Issues atau Pull Request.
+
+Sebelum mengirim perubahan, jalankan pemeriksaan dasar:
+
+```bash
+flutter pub get
+flutter analyze
+flutter test
+```
+
+---
+
+## Lisensi
+
+Lisensi project belum ditentukan. Jangan menganggap source code ini bebas digunakan ulang atau didistribusikan sebelum pemilik project menambahkan file `LICENSE` dan menetapkan ketentuannya.
+
+---
+
+**Built with Flutter for Bittaqwa.**
